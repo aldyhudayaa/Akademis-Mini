@@ -1,6 +1,10 @@
 <?php
 
 ?>
+<<<<<<< HEAD
+=======
+
+>>>>>>> f434f1665c52974f529e6f558de0974bc5f1ec8d
 <!DOCTYPE html>
 <html lang="en">
 <head>
