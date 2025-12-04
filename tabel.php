@@ -8,6 +8,7 @@
     <title>Web Aldy</title>
     <link rel="stylesheet" href="style.css">
     
+    
 </head>
 <body>
     <header>
