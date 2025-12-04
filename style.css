@@ -6,10 +6,7 @@ nav a {
     font-weight: bold;
     font-size: smaller;
     
-<<<<<<< HEAD
     
-=======
->>>>>>> f434f1665c52974f529e6f558de0974bc5f1ec8d
 }
 nav a:hover{
     font-weight: 200px;
@@ -44,4 +41,6 @@ footer {
     bottom: 0;
     color: #333;
     width: 100%;
+
+
 }
