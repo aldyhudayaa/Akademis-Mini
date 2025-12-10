@@ -105,7 +105,7 @@ if(isset($_POST['login'])){
     <div class="login-card">
         <div class="login-header">
             <h2>SIGANDUM</h2>
-            <p>Sistem Informasi Akademik Universitas</p>
+            <p>Lebih bergizi dari padi</p>
         </div>
 
         <?php if(isset($error)): ?>
@@ -136,7 +136,7 @@ if(isset($_POST['login'])){
         </form>
 
         <div class="footer-text">
-            <p class="mb-0">© 2025 SIGANDUM - Admin: Aldy & Dafi</p>
+            <p class="mb-0">© 2025 SIGANDUM</p>
         </div>
     </div>
 </div>
