@@ -228,7 +228,7 @@ if (isset($_POST['simpan'])) {
                                 <td>$row[ruangan]</td>
                                 <td>
                                     <a href='db/hapus.php?id_jadwal=$row[id_jadwal]' class='btn btn-danger btn-sm'>Hapus</a>
-                                    <a href='db/edit.php?nim=$row[id_jadwal]' class='btn btn-warning btn-sm'>Edit</a>
+                                    <a href='db/edit.php?id_jadwal=$row[id_jadwal]' class='btn btn-warning btn-sm'>Edit</a>
                                 </td>
                             </tr>";
                             $nomor++;

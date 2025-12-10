@@ -119,7 +119,7 @@
                                 <td>$row[nama_dosen]</td>
                                 <td>
                                     <a href='db/hapus.php?id_dosen=$row[id_dosen]' class='btn btn-danger btn-sm'>Hapus</a>
-                                    <a href='db/edit.php?nim=$row[id_dosen]' class='btn btn-warning btn-sm'>Edit</a>
+                                    <a href='db/edit.php?id_dosen=$row[id_dosen]' class='btn btn-warning btn-sm'>Edit</a>
                                 </td>
                             </tr>";
                             $nomor++;

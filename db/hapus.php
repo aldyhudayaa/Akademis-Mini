@@ -54,4 +54,17 @@ if (isset($_GET['id_jadwal'])){
     echo "Error deleting record: " . $conn->error;
     }
 }
+
+if (isset($_GET['id_krs'])){
+    $id_krs = $_GET['id_krs'];
+    $sql = "DELETE FROM krs WHERE id_krs = '$id_krs'";
+    if ($conn->query($sql) === TRUE) {
+   echo "<script>
+                alert('Data berhasil diubah!');
+                window.location.href='../index.php';
+              </script>";
+    } else {
+    echo "Error deleting record: " . $conn->error;
+    }
+}
 ?>

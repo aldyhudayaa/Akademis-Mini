@@ -124,7 +124,7 @@
                                 <td>$row[nama_mk]</td>
                                 <td>
                                     <a href='db/hapus.php?id_mk=$row[id_mk]' class='btn btn-danger btn-sm'>Hapus</a>
-                                    <a href='db/edit.php?nim=$row[id_mk]' class='btn btn-warning btn-sm'>Edit</a>
+                                    <a href='db/edit.php?id_mk=$row[id_mk]' class='btn btn-warning btn-sm'>Edit</a>
                                 </td>
                             </tr>";
                             $nomor++;
