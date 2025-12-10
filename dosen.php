@@ -61,7 +61,7 @@
     <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
-            <h3 class="m-0">Data Dosen</h3>
+            <h3 class="m-0">Tabel Data Dosen</h3>
         </header>
         
         <main class="p-4">
@@ -105,7 +105,7 @@
                 }
             }
             ?>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>

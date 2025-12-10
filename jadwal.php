@@ -1,3 +1,6 @@
+<?php 
+include 'check.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +66,7 @@
     <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
-            <h3 class="m-0">Sistem Akademis</h3>
+            <h3 class="m-0">Tabel Jadwal Perkuliahan</h3>
         </header>
         
         <main class="p-4">
@@ -80,22 +83,17 @@
                         <div class="modal-body">
                             <form action="" method="POST">
                             <div class="mb-3">
-                                <label for="id_mk" class="form-label">ID MK:</label>
+                                <label for="id_mk" class="form-label">Mata Kuliah:</label>
                                 
                                 <select class="form-select" id="id_mk" name="id_mk" required>
                                     <option value="">-- Pilih Mata Kuliah --</option>
                                     
                                     <?php
-                                    // 1. Query Data
                                     $sql_mk = "SELECT id_mk, nama_mk FROM mk ORDER BY nama_mk ASC";
                                     $result_mk = $conn->query($sql_mk);
 
-                                    // 2. Cek apakah ada data
                                     if ($result_mk->num_rows > 0) {
-                                        // 3. Looping data menjadi option
                                         while($row = $result_mk->fetch_assoc()) {
-                                            // value="..." adalah data yang masuk ke database (ID)
-                                            // Text di antara >...< adalah yang dilihat user (Nama MK)
                                             echo "<option value='" . $row['id_mk'] . "'>" . $row['nama_mk'] . " (" . $row['id_mk'] . ")</option>";
                                         }
                                     } else {
@@ -105,22 +103,17 @@
                                 </select>
                             </div>
                                 <div class="mb-3">
-                                <label for="id_dosen" class="form-label">ID dosen:</label>
+                                <label for="id_dosen" class="form-label">Dosen:</label>
                                 
                                 <select class="form-select" id="id_dosen" name="id_dosen" required>
                                     <option value="">-- Pilih Dosen --</option>
                                     
                                     <?php
-                                    // 1. Query Data
                                     $sql_dosen = "SELECT id_dosen, nama_dosen FROM dosen ORDER BY nama_dosen ASC";
                                     $result_dosen = $conn->query($sql_dosen);
 
-                                    // 2. Cek apakah ada data
                                     if ($result_dosen->num_rows > 0) {
-                                        // 3. Looping data menjadi option
                                         while($row = $result_dosen->fetch_assoc()) {
-                                            // value="..." adalah data yang masuk ke database (ID)
-                                            // Text di antara >...< adalah yang dilihat user (Nama MK)
                                             echo "<option value='" . $row['id_dosen'] . "'>" . $row['nama_dosen'] . " (" . $row['id_dosen'] . ")</option>";
                                         }
                                     } else {
@@ -133,6 +126,7 @@
                                     <label for="hari" class="form-label">Hari:</label>
                                 
                                 <select class="form-select" id="hari" name="hari" required>
+                                    <option value="">-- Pilih Hari --</option>
                                     <option>Senin</option>
                                     <option>Selasa</option>
                                     <option>Rabu</option>
@@ -141,11 +135,11 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="jam_mulai" class="form-label">Jam Mulai (24H):</label>
+                                    <label for="jam_mulai" class="form-label">Jam Mulai:</label>
                                     <input type="time" class="form-control" id="jam_mulai" name="jam_mulai" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="jam_selesai" class="form-label">Jam Selesai (24H):</label>
+                                    <label for="jam_selesai" class="form-label">Jam Selesai:</label>
                                     <input type="time" class="form-control" id="jam_selesai" name="jam_selesai" required>
                                 </div>
                                 <div class="mb-3">
@@ -165,7 +159,6 @@
 
            <?php
 if (isset($_POST['simpan'])) {
-    // 1. Tangkap semua input dari Form dengan benar
     $id_mk       = $_POST['id_mk'];
     $id_dosen    = $_POST['id_dosen'];
     $hari        = $_POST['hari'];
@@ -174,25 +167,19 @@ if (isset($_POST['simpan'])) {
     $semester    = $_POST['semester'];
     $ruangan     = $_POST['ruangan'];
 
-    // 2. Validasi Logika Sederhana (Sparring Partner)
-    // Mencegah jam selesai lebih awal dari jam mulai
     if ($jam_mulai >= $jam_selesai) {
         echo "<script>alert('Gagal: Jam Selesai harus lebih akhir dari Jam Mulai!');</script>";
     } else {
-        // 3. Query Insert menggunakan Prepared Statement (Aman)
-        // Catatan: Kolom 'kuota' saya hapus dari sini agar otomatis mengikuti Default Database (40)
         $query = "INSERT INTO jadwal (id_mk, id_dosen, hari, jam_mulai, jam_selesai, semester, ruangan) 
                   VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($query);
-        
-        // "sssssss" artinya semua 7 variabel dianggap string (aman untuk varchar & time)
         $stmt->bind_param("sssssss", $id_mk, $id_dosen, $hari, $jam_mulai, $jam_selesai, $semester, $ruangan);
 
         if ($stmt->execute()) {
             echo "<script>
                     alert('Data Jadwal berhasil ditambah!');
-                    window.location.href='jadwal.php'; // Ganti dengan nama file halaman ini (refresh)
+                    window.location.href='jadwal.php';
                   </script>";
         } else {
             echo "<script>alert('Error: " . $stmt->error . "');</script>";
@@ -202,50 +189,75 @@ if (isset($_POST['simpan'])) {
     }
 }
 ?>
-        <table class="table table-bordered">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
                 <thead>
-                    <tr class="text-center">
-                        <th>No</th>
-                        <th>ID jadwal</th>
-                        <th>ID MK</th>
-                        <th>ID dosen</th>
-                        <th>Hari</th>
-                        <th>Jam mulai</th>
-                        <th>Jam selesai</th>
-                        <th>Semester</th>
-                        <th>Ruangan</th>
-                        <th>Edit/Hapus</th>
+                    <tr class="text-center align-middle">
+                        <th style="width: 50px;">No</th>
+                        <th style="width: 80px;">ID Jadwal</th>
+                        <th style="width: 200px;">Mata Kuliah</th>
+                        <th style="width: 150px;">Dosen</th>
+                        <th style="width: 100px;">Hari</th>
+                        <th style="width: 100px;">Jam Mulai</th>
+                        <th style="width: 100px;">Jam Selesai</th>
+                        <th style="width: 80px;">Semester</th>
+                        <th style="width: 100px;">Ruangan</th>
+                        <th style="width: 150px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM jadwal";
+                    // Query dengan JOIN untuk menampilkan nama mata kuliah dan nama dosen
+                    $sql = "SELECT j.*, mk.nama_mk, d.nama_dosen 
+                            FROM jadwal j
+                            LEFT JOIN mk ON j.id_mk = mk.id_mk
+                            LEFT JOIN dosen d ON j.id_dosen = d.id_dosen
+                            ORDER BY j.id_jadwal ASC";
                     $result = $conn->query($sql);
                     $nomor = 1;
 
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
+                            // Format jam tanpa detik
+                            $jam_mulai = substr($row['jam_mulai'], 0, 5);
+                            $jam_selesai = substr($row['jam_selesai'], 0, 5);
+                            
                             echo "<tr>
-                                <td>$nomor</td>    
-                                <td>$row[id_jadwal]</td>
-                                <td>$row[id_mk]</td>
-                                <td>$row[id_dosen]</td>
-                                <td>$row[hari]</td>
-                                <td>$row[jam_mulai]</td>
-                                <td>$row[jam_selesai]</td>
-                                <td>$row[semester]</td>
-                                <td>$row[ruangan]</td>
+                                <td class='text-center'>{$nomor}</td>    
+                                <td class='text-center'>{$row['id_jadwal']}</td>
                                 <td>
-                                    <a href='db/hapus.php?id_jadwal=$row[id_jadwal]' class='btn btn-danger btn-sm'>Hapus</a>
-                                    <a href='db/edit.php?id_jadwal=$row[id_jadwal]' class='btn btn-warning btn-sm'>Edit</a>
+                                    <strong>{$row['nama_mk']}</strong><br>
+                                    <small class='text-muted'>ID: {$row['id_mk']}</small>
+                                </td>
+                                <td>
+                                    {$row['nama_dosen']}<br>
+                                    <small class='text-muted'>ID: {$row['id_dosen']}</small>
+                                </td>
+                                <td class='text-center'>{$row['hari']}</td>
+                                <td class='text-center'>{$jam_mulai}</td>
+                                <td class='text-center'>{$jam_selesai}</td>
+                                <td class='text-center'>{$row['semester']}</td>
+                                <td class='text-center'>
+                                    <span class='badge bg-info text-dark'>{$row['ruangan']}</span>
+                                </td>
+                                <td class='text-center'>
+                                    <a href='db/edit.php?id_jadwal={$row['id_jadwal']}' class='btn btn-warning btn-sm mb-1'>
+                                        <small>Edit</small>
+                                    </a>
+                                    <a href='db/hapus.php?id_jadwal={$row['id_jadwal']}' class='btn btn-danger btn-sm mb-1' onclick='return confirm(\"Yakin ingin menghapus jadwal ini?\")'>
+                                        <small>Hapus</small>
+                                    </a>
                                 </td>
                             </tr>";
                             $nomor++;
                         }
+                    } else {
+                        echo "<tr><td colspan='10' class='text-center text-muted'>Belum ada data jadwal</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
+        </div>
         </main>
     </div>
 
