@@ -1,5 +1,4 @@
 <?php 
-// Proteksi halaman - harus login dulu
 include 'check.php';
 ?>
 <!DOCTYPE html>
@@ -51,7 +50,16 @@ include 'koneksi.php';
         </ul>
         <hr>
         <div>
-            <p class="mb-0">Admin: Aldy & Dafi</p>
+            <button type="button" class="btn btn-danger" id="logout">Logout</button>
+
+            <script>
+                const button = document.getElementById('logout');
+                button.addEventListener('click', function() {
+                    if (confirm('Yakin ingin keluar?')) {
+                        window.location.href = 'logout.php'; 
+                    }
+                });
+            </script>
         </div>
     </div>
 
