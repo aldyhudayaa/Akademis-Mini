@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="style.css">
     <title>SIGANDUM</title>
 </head>
-<body>
-<?php include 'koneksi.php'; ?>
 
+<body> 
+<?php include 'koneksi.php'; ?>
 <div class="d-flex">
     <!-- Sidebar -->
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-success text-white" style="width: 250px; min-height: 100vh;">
@@ -23,12 +23,12 @@
                 </a>
             </li>
             <li>
-                <a href="tabel.php" class="nav-link text-white active" aria-current="page">
+                <a href="tabel.php"class="nav-link text-white">
                     Tabel
                 </a>
             </li>
             <li>
-                <a href="dosen.php" class="nav-link text-white">
+                <a href="dosen.php" class="nav-link text-white active" aria-current="page">
                     Data Dosen
                 </a>
             </li>
@@ -47,17 +47,15 @@
     <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
-            <h3 class="m-0">Data Mahasiswa</h3>
+            <h3 class="m-0">Data Dosen</h3>
         </header>
         
-        <main class="p-5">
-            <!-- Button Tambah -->
-            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#myModal">
+        <main class="p-4">
+            
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#myModal">
                 Tambah
             </button>
-            
-            <!-- Modal -->
-            <div class="modal" id="myModal">
+        <div class="modal" id="myModal">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -67,12 +65,12 @@
                         <div class="modal-body">
                             <form action="" method="POST">
                                 <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" required>
+                                    <label for="id_dosen" class="form-label">ID dosen</label>
+                                    <input type="text" class="form-control" id="id_dosen" name="id_dosen" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="nim" class="form-label">NIM</label>
-                                    <input type="text" class="form-control" id="nim" name="nim" required>
+                                    <label for="nama_dosen" class="form-label">Nama dosen</label>
+                                    <input type="text" class="form-control" id="nama-dosen" name="nama_dosen" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary" name="simpan">Submit</button>
                             </form>
@@ -83,30 +81,28 @@
 
             <?php
             if(isset($_POST['simpan'])){
-                $nama = $_POST['nama'];
-                $nim = $_POST['nim'];
+                $id = $_POST['id_dosen'];
+                $nama = $_POST['nama_dosen'];
                 
-                $query = "INSERT INTO mahasiswa (nama, nim) VALUES ('$nama', '$nim')";
+                $query = "INSERT INTO dosen (id_dosen, nama_dosen) VALUES ('$id', '$nama')";
                 
                 if ($conn->query($query) === TRUE) {
                     echo "<script>alert('Data berhasil ditambah!');</script>";
                 }
             }
             ?>
-
-            <!-- Tabel -->
-            <table class="table table-bordered">
+        <table class="table table-bordered">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>NIM</th>
-                        <th>Aksi</th>
+                        <th>ID</th>
+                        <th>Nama dosen</th>
+                        <th>Edit/Hapus</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT * FROM mahasiswa";
+                    $sql = "SELECT * FROM dosen";
                     $result = $conn->query($sql);
                     $nomor = 1;
 
@@ -114,11 +110,11 @@
                         while($row = $result->fetch_assoc()) {
                             echo "<tr>
                                 <td>$nomor</td>    
-                                <td>$row[nama]</td>
-                                <td>$row[nim]</td>
+                                <td>$row[id_dosen]</td>
+                                <td>$row[nama_dosen]</td>
                                 <td>
-                                    <a href='db/hapus.php?nim=$row[nim]' class='btn btn-danger btn-sm'>Hapus</a>
-                                    <a href='db/edit.php?nim=$row[nim]' class='btn btn-warning btn-sm'>Edit</a>
+                                    <a href='db/hapus.php?id_dosen=$row[id_dosen]' class='btn btn-danger btn-sm'>Hapus</a>
+                                    <a href='db/edit.php?nim=$row[id_dosen]' class='btn btn-warning btn-sm'>Edit</a>
                                 </td>
                             </tr>";
                             $nomor++;
@@ -129,7 +125,9 @@
             </table>
         </main>
     </div>
+
 </div>
+
 
 </body>
 </html>

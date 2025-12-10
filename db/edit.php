@@ -44,12 +44,6 @@ if(isset($_GET['nim'])){
                        value="<?php echo $data_lama['nim']; ?>">
             </div>
 
-            <div class="mb-3">
-                <label for="jk" class="form-label">Jenis Kelamin</label>
-                <input type="text" class="form-control" id="jk" name="jk" 
-                       value="<?php echo $data_lama['jk']; ?>">
-            </div>
-
             <button type="submit" class="btn btn-info" name="update">Simpan Perubahan</button>
             <a href="../tabel.php" class="btn btn-secondary">Batal</a>
         </form>
@@ -65,10 +59,9 @@ if(isset($_POST['update'])){
     $nim_lama = $_POST['nim_lama']; // Kunci rahasia tadi
     $nim_baru = $_POST['nim'];
     $nama     = $_POST['nama'];
-    $jk       = $_POST['jk'];
     
 
-    $query = "UPDATE mahasiswa SET nim='$nim_baru', nama='$nama', jk='$jk' WHERE nim='$nim_lama'";
+    $query = "UPDATE mahasiswa SET nim='$nim_baru', nama='$nama' WHERE nim='$nim_lama'";
 
     if ($conn->query($query) === TRUE) {
         // Redirect otomatis kembali ke tabel setelah sukses

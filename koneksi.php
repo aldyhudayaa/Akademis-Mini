@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "mahasiswa_web";
+$database = "akademis_mini";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password,$database);
