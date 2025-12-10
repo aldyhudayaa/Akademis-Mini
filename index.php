@@ -156,7 +156,7 @@ include 'koneksi.php';
             }
             ?>
 
-            <table class="table table-bordered">
+            <table class="table table-bordered table-striped">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>
@@ -192,9 +192,108 @@ include 'koneksi.php';
                     ?>
                 </tbody>
             </table>
-            </section>
-        </main>
+            <br><br>
+            
+            
+            <h3 class="text-center" style="text-white">CETAK KRS</h2>
+
+            <form action="" method="GET" class="row g-3 align-items-end mb-4">            
+            <div class="col-auto">
+                <label for="nim" class="form-label fw-bold">Pilih Mahasiswa:</label>
+                <select class="form-select" id="nim" name="nim" required>
+                    <option value="">-- Pilih Mahasiswa --</option>
+                    <?php
+                    $sql_nim = "SELECT nim, nama FROM mahasiswa ORDER BY nama ASC";
+                    $result_nim = $conn->query($sql_nim);
+                    // Menangkap NIM yang sedang dipilih agar dropdown tidak reset
+                    $selected_nim = isset($_GET['nim']) ? $_GET['nim'] : '';
+
+                    if ($result_nim->num_rows > 0) {
+                        while($row = $result_nim->fetch_assoc()) {
+                            // Logika agar opsi tetap terpilih setelah submit
+                            $selected = ($row['nim'] == $selected_nim) ? 'selected' : '';
+                            echo "<option value='" . $row['nim'] . "' $selected>" . $row['nama'] . " (" . $row['nim'] . ")</option>";
+                        }
+                    }
+                    ?>
+                     </select>
     </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Lihat KRS</button>
+        <a href="index.php" class="btn btn-secondary">Reset</a>
+    </div>
+</form>  
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr class="text-center">
+            <th>No</th>
+            <th>Mata Kuliah</th> 
+            <th>Dosen</th>
+            <th>Waktu & Ruangan</th>
+            <th>Nilai</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Perbaikan: Cek dulu apakah user sudah memilih NIM?
+        if (isset($_GET['nim']) && $_GET['nim'] != '') {
+            
+            $nim = $_GET['nim']; // Ambil data dari URL
+
+            $sql_cetak = "SELECT 
+                            mk.nama_mk,
+                            mk.sks,
+                            d.nama_dosen, 
+                            j.hari,
+                            j.jam_mulai,
+                            j.jam_selesai,
+                            j.ruangan,
+                            k.nilai
+                        FROM krs k
+                        JOIN jadwal j ON k.id_jadwal = j.id_jadwal
+                        JOIN mk ON j.id_mk = mk.id_mk
+                        JOIN dosen d ON j.id_dosen = d.id_dosen 
+                        WHERE k.nim = '$nim'"; 
+
+            $result_cetak = $conn->query($sql_cetak);
+            $nomor = 1;
+
+            if ($result_cetak && $result_cetak->num_rows > 0) {
+                while($row = $result_cetak->fetch_assoc()) {
+                    $waktu = $row['hari'] . ", " . substr($row['jam_mulai'], 0, 5) . "-" . substr($row['jam_selesai'], 0, 5);
+                    
+                    // Mencegah error jika kolom SKS belum ada
+                    $sks = isset($row['sks']) ? $row['sks'] : '-';
+
+                    echo "<tr>
+                            <td class='text-center'>$nomor</td>    
+                            <td>
+                                <strong>{$row['nama_mk']}</strong><br>
+                                <small class='text-muted'>{$sks} SKS</small>
+                            </td>
+                            <td>{$row['nama_dosen']}</td>
+                            <td>
+                                {$waktu} <br> 
+                                <span class='badge bg-info text-dark'>{$row['ruangan']}</span>
+                            </td>
+                            <td class='text-center fw-bold'>{$row['nilai']}</td>
+                        </tr>";
+                    $nomor++;
+                }
+            } else {
+                echo "<tr><td colspan='5' class='text-center text-danger'>Mahasiswa ini belum mengambil KRS (Data Kosong).</td></tr>";
+            }
+        } else {
+            // Pesan jika belum memilih
+            echo "<tr><td colspan='5' class='text-center'>Silakan pilih mahasiswa dan klik tombol 'Lihat KRS'.</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+                </section>
+            </main>
+        </div>
 
 </div>
 

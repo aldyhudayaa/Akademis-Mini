@@ -136,6 +136,11 @@ elseif(isset($_GET['id_mk'])){
                         <label for="nama_mk" class="form-label">Nama Mata Kuliah</label>
                         <input type="text" class="form-control" name="nama_mk" value="<?php echo $data['nama_mk']; ?>" required>
                     </div>
+
+                    <div class="mb-3">
+                        <label for="sks" class="form-label">SKS</label>
+                        <input type="text" class="form-control" name="sks" value="<?php echo $data['sks']; ?>" required>
+                    </div>
                     
                     <button type="submit" name="update_mk" class="btn btn-success">Update</button>
                     <a href="../mk.php" class="btn btn-secondary">Kembali</a>
@@ -149,8 +154,9 @@ elseif(isset($_GET['id_mk'])){
         $id_mk_lama = $_POST['id_mk_lama'];
         $id_mk_baru = $_POST['id_mk'];
         $nama_mk = $_POST['nama_mk'];
+        $sks = $_POST['sks'];
         
-        $query = "UPDATE mk SET id_mk='$id_mk_baru', nama_mk='$nama_mk' WHERE id_mk='$id_mk_lama'";
+        $query = "UPDATE mk SET id_mk='$id_mk_baru', nama_mk='$nama_mk', sks = '$sks' WHERE id_mk='$id_mk_lama'";
         
         if($conn->query($query) === TRUE){
             echo "<script>alert('Data berhasil diupdate!'); window.location.href='../mk.php';</script>";

@@ -88,8 +88,8 @@
                                     <input type="text" class="form-control" id="nama_mk" name="nama_mk" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="id_dosen" class="form-label">ID dosen</label>
-                                    <input type="text" class="form-control" id="id_dosen" name="id_dosen" required>
+                                    <label for="sks" class="form-label">SKS</label>
+                                    <input type="text" class="form-control" id="sks" name="sks" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary" name="simpan">Submit</button>
                             </form>
@@ -102,8 +102,9 @@
             if(isset($_POST['simpan'])){
                 $id = $_POST['id_mk'];
                 $nama = $_POST['nama_mk'];
+                $sks = $_POST['sks'];
                 
-                $query = "INSERT INTO mk (id_mk, nama_mk, id_dosen) VALUES ('$id', '$nama','$id_dosen')";
+                $query = "INSERT INTO mk (id_mk, nama_mk, sks) VALUES ('$id', '$nama', $sks)";
                 
                 if ($conn->query($query) === TRUE) {
                     echo "<script>alert('Data berhasil ditambah!');</script>";
@@ -116,6 +117,7 @@
                         <th>No</th>
                         <th>ID</th>
                         <th>Nama MK</th>
+                        <th>SKS</th>
                         <th>Edit/Hapus</th>
                     </tr>
                 </thead>
@@ -131,6 +133,7 @@
                                 <td>$nomor</td>    
                                 <td>$row[id_mk]</td>
                                 <td>$row[nama_mk]</td>
+                                <td>$row[sks]</td>
                                 <td>
                                     <a href='db/hapus.php?id_mk=$row[id_mk]' class='btn btn-danger btn-sm'>Hapus</a>
                                     <a href='db/edit.php?id_mk=$row[id_mk]' class='btn btn-warning btn-sm'>Edit</a>
