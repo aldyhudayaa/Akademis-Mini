@@ -41,4 +41,17 @@ if (isset($_GET['id_mk'])){
     echo "Error deleting record: " . $conn->error;
     }
 }
+
+if (isset($_GET['id_jadwal'])){
+    $id_jadwal = $_GET['id_jadwal'];
+    $sql = "DELETE FROM jadwal WHERE id_jadwal = '$id_jadwal'";
+    if ($conn->query($sql) === TRUE) {
+   echo "<script>
+                alert('Data berhasil diubah!');
+                window.location.href='../jadwal.php';
+              </script>";
+    } else {
+    echo "Error deleting record: " . $conn->error;
+    }
+}
 ?>

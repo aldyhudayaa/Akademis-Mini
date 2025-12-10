@@ -25,8 +25,13 @@
                 </a>
             </li>
             <li>
+                <a href="jadwal.php" class="nav-link text-white">
+                    Jadwal
+                </a>
+            </li>
+            <li>
                 <a href="tabel.php"class="nav-link text-white">
-                    Tabel
+                    Data Mahasiswa
                 </a>
             </li>
             <li>
@@ -88,7 +93,6 @@
             if(isset($_POST['simpan'])){
                 $id = $_POST['id_mk'];
                 $nama = $_POST['nama_mk'];
-                $id_dosen = $_POST['id_dosen'];
                 
                 $query = "INSERT INTO mk (id_mk, nama_mk, id_dosen) VALUES ('$id', '$nama','$id_dosen')";
                 
@@ -103,7 +107,6 @@
                         <th>No</th>
                         <th>ID</th>
                         <th>Nama MK</th>
-                        <th>ID dosen</th>
                         <th>Edit/Hapus</th>
                     </tr>
                 </thead>
@@ -119,10 +122,9 @@
                                 <td>$nomor</td>    
                                 <td>$row[id_mk]</td>
                                 <td>$row[nama_mk]</td>
-                                <td>$row[id_dosen]</td>
                                 <td>
                                     <a href='db/hapus.php?id_mk=$row[id_mk]' class='btn btn-danger btn-sm'>Hapus</a>
-                                    <a href='db/edit.php?nim=$row[id_dosen]' class='btn btn-warning btn-sm'>Edit</a>
+                                    <a href='db/edit.php?nim=$row[id_mk]' class='btn btn-warning btn-sm'>Edit</a>
                                 </td>
                             </tr>";
                             $nomor++;

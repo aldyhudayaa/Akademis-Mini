@@ -22,8 +22,13 @@
                 </a>
             </li>
             <li>
+                <a href="jadwal.php" class="nav-link text-white">
+                    Jadwal
+                </a>
+            </li>
+            <li>
                 <a href="tabel.php" class="nav-link text-white">
-                    Tabel
+                    Data Mahasiswa
                 </a>
             </li>
             <li>
