@@ -69,7 +69,7 @@ include 'koneksi.php';
             <h3 class="m-0">Sistem Akademis</h3>
         </header>
         
-        <main class="p-4">
+        <main>
             <section>
                 <h1 class="text-center" style="font">DASHBOARD SIGANDUM</h1>
                 <br><br>
@@ -81,7 +81,7 @@ include 'koneksi.php';
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Tambah Data Mahasiswa</h4>
+                            <h4 class="modal-title">Tambah Data KRS</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
