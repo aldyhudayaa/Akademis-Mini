@@ -4,7 +4,7 @@ include '../koneksi.php';
 
 $nim = $_SESSION['nim'];
 
-// Ambil data mahasiswa
+
 $query_mhs = "SELECT * FROM mahasiswa WHERE nim='$nim'";
 $result_mhs = $conn->query($query_mhs);
 $data_mhs = $result_mhs->fetch_assoc();
@@ -22,7 +22,7 @@ $data_mhs = $result_mhs->fetch_assoc();
 <body> 
 
 <div class="d-flex">
-    <!-- Sidebar -->
+
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-primary text-white" style="width: 250px; min-height: 100vh;">
         <h4 class="mb-3">SIGANDUM</h4>
         <p class="text-white-50 small">Portal Mahasiswa</p>
@@ -65,7 +65,6 @@ $data_mhs = $result_mhs->fetch_assoc();
         </script>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
             <h3 class="m-0">Dashboard Mahasiswa</h3>

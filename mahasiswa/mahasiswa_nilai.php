@@ -57,12 +57,12 @@ $nim = $_SESSION['nim'];
         
         <main class="p-4">
             <div class="card shadow-sm">
-                <div class="card-header bg-success text-white">
+                <div class="card-header bg-primary text-white">
                     <h5 class="mb-0">Transkrip Nilai Sementara</h5>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
-                        <thead class="table-dark">
+                        <thead class="table-white">
                             <tr class="text-center">
                                 <th>No</th>
                                 <th>Mata Kuliah</th>

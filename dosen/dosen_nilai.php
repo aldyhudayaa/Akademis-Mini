@@ -66,14 +66,12 @@ if(isset($_POST['update_nilai'])){
         </script>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
             <h3 class="m-0">Input Nilai Mahasiswa</h3>
         </header>
         
         <main class="p-4">
-            <!-- Filter Mata Kuliah -->
             <form method="GET" class="mb-4">
                 <div class="row">
                     <div class="col-md-4">
