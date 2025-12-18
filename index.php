@@ -1,5 +1,5 @@
 <?php 
-include 'check.php';
+include 'check/check_admin.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +17,6 @@ include 'check.php';
 include 'koneksi.php';
 ?>
 <div class="d-flex">
-    <!-- Sidebar -->
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-success text-white" style="width: 250px; min-height: 100vh;">
         <h4 class="mb-3">SIGANDUM</h4>
         <hr>
@@ -63,7 +62,6 @@ include 'koneksi.php';
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
             <h3 class="m-0">Sistem Akademis</h3>
@@ -93,13 +91,13 @@ include 'koneksi.php';
                                     <option value="">-- Pilih Mahasiswa --</option>
                                     
                                     <?php
-                                    // 1. Query Data
+                   
                                     $sql_nim = "SELECT nim, nama FROM mahasiswa ORDER BY nama ASC";
                                     $result_nim = $conn->query($sql_nim);
 
-                                    // 2. Cek apakah ada data
+                                   
                                     if ($result_nim->num_rows > 0) {
-                                        // 3. Looping data menjadi option
+                                     
                                         while($row = $result_nim->fetch_assoc()) {
                                             echo "<option value='" . $row['nim'] . "'>" . $row['nama'] . " (" . $row['nim'] . ")</option>";
                                         }
@@ -205,12 +203,12 @@ include 'koneksi.php';
                     <?php
                     $sql_nim = "SELECT nim, nama FROM mahasiswa ORDER BY nama ASC";
                     $result_nim = $conn->query($sql_nim);
-                    // Menangkap NIM yang sedang dipilih agar dropdown tidak reset
+            
                     $selected_nim = isset($_GET['nim']) ? $_GET['nim'] : '';
 
                     if ($result_nim->num_rows > 0) {
                         while($row = $result_nim->fetch_assoc()) {
-                            // Logika agar opsi tetap terpilih setelah submit
+
                             $selected = ($row['nim'] == $selected_nim) ? 'selected' : '';
                             echo "<option value='" . $row['nim'] . "' $selected>" . $row['nama'] . " (" . $row['nim'] . ")</option>";
                         }
@@ -236,10 +234,9 @@ include 'koneksi.php';
     </thead>
     <tbody>
         <?php
-        // Perbaikan: Cek dulu apakah user sudah memilih NIM?
         if (isset($_GET['nim']) && $_GET['nim'] != '') {
             
-            $nim = $_GET['nim']; // Ambil data dari URL
+            $nim = $_GET['nim']; 
 
             $sql_cetak = "SELECT 
                             mk.nama_mk,
@@ -262,8 +259,7 @@ include 'koneksi.php';
             if ($result_cetak && $result_cetak->num_rows > 0) {
                 while($row = $result_cetak->fetch_assoc()) {
                     $waktu = $row['hari'] . ", " . substr($row['jam_mulai'], 0, 5) . "-" . substr($row['jam_selesai'], 0, 5);
-                    
-                    // Mencegah error jika kolom SKS belum ada
+
                     $sks = isset($row['sks']) ? $row['sks'] : '-';
 
                     echo "<tr>
@@ -285,7 +281,7 @@ include 'koneksi.php';
                 echo "<tr><td colspan='5' class='text-center text-danger'>Mahasiswa ini belum mengambil KRS (Data Kosong).</td></tr>";
             }
         } else {
-            // Pesan jika belum memilih
+
             echo "<tr><td colspan='5' class='text-center'>Silakan pilih mahasiswa dan klik tombol 'Lihat KRS'.</td></tr>";
         }
         ?>

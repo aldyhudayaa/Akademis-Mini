@@ -1,9 +1,15 @@
 <?php
 session_start();
 
-// Jika sudah login, redirect ke index.php
+// Jika sudah login, redirect sesuai level
 if(isset($_SESSION['login'])){
-    header("Location: index.php");
+    if($_SESSION['level'] == 'admin'){
+        header("Location: index.php");
+    } elseif($_SESSION['level'] == 'mahasiswa'){
+        header("Location: /mahasiswa/mahasiswa_dashboard.php");
+    } elseif($_SESSION['level'] == 'dosen'){
+        header("Location: /dosen/dosen_dashboard.php");
+    }
     exit;
 }
 
@@ -11,18 +17,31 @@ include 'koneksi.php';
 
 // Proses Login
 if(isset($_POST['login'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
     
     // Query untuk cek username dan password
-    // CATATAN: Ini contoh sederhana. Di production, gunakan password_hash() dan prepared statement
     $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = $conn->query($query);
     
     if($result->num_rows > 0){
+        $user = $result->fetch_assoc();
+        
         $_SESSION['login'] = true;
-        $_SESSION['username'] = $username;
-        header("Location: index.php");
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
+        $_SESSION['level'] = $user['level'];
+        $_SESSION['nim'] = $user['nim'];
+        $_SESSION['id_dosen'] = $user['id_dosen'];
+        
+        // Redirect sesuai level
+        if($user['level'] == 'admin'){
+            header("Location: index.php");
+        } elseif($user['level'] == 'mahasiswa'){
+            header("Location: mahasiswa/mahasiswa_dashboard.php");
+        } elseif($user['level'] == 'dosen'){
+            header("Location: dosen/dosen_dashboard.php");
+        }
         exit;
     } else {
         $error = "Username atau Password salah!";
@@ -36,7 +55,6 @@ if(isset($_POST['login'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Login - SIGANDUM</title>
     <style>
@@ -63,14 +81,6 @@ if(isset($_POST['login'])){
             font-weight: bold;
             margin-bottom: 10px;
         }
-        .login-header p {
-            color: #666;
-            font-size: 14px;
-        }
-        .form-control:focus {
-            border-color: #198754;
-            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
-        }
         .btn-login {
             background-color: #198754;
             border: none;
@@ -83,20 +93,6 @@ if(isset($_POST['login'])){
         .btn-login:hover {
             background-color: #157347;
         }
-        .alert-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 12px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-        }
-        .footer-text {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-            font-size: 13px;
-        }
     </style>
 </head>
 <body>
@@ -105,11 +101,11 @@ if(isset($_POST['login'])){
     <div class="login-card">
         <div class="login-header">
             <h2>SIGANDUM</h2>
-            <p>Lebih bergizi dari padi</p>
+            <p>Sistem Informasi Akademik</p>
         </div>
 
         <?php if(isset($error)): ?>
-            <div class="alert-error">
+            <div class="alert alert-danger">
                 <strong>Error!</strong> <?php echo $error; ?>
             </div>
         <?php endif; ?>
@@ -125,18 +121,11 @@ if(isset($_POST['login'])){
                 <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password" required>
             </div>
 
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="remember">
-                <label class="form-check-label" for="remember">
-                    Ingat Saya
-                </label>
-            </div>
-
             <button type="submit" class="btn btn-success btn-login" name="login">Login</button>
         </form>
 
-        <div class="footer-text">
-            <p class="mb-0">© 2025 SIGANDUM</p>
+        <div class="text-center mt-3">
+            <small class="text-muted">© 2025 SIGANDUM</small>
         </div>
     </div>
 </div>

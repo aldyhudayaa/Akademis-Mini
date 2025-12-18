@@ -12,7 +12,6 @@
 <body> 
 <?php include 'koneksi.php'; ?>
 <div class="d-flex">
-    <!-- Sidebar -->
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-success text-white" style="width: 250px; min-height: 100vh;">
         <h4 class="mb-3">SIGANDUM</h4>
         <hr>
@@ -58,7 +57,6 @@
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="flex-grow-1">
         <header class="bg-dark text-white p-3">
             <h3 class="m-0">Tabel Data Dosen</h3>

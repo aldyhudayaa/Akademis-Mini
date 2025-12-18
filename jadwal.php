@@ -1,5 +1,5 @@
 <?php 
-include 'check.php';
+include 'check/check_admin.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
